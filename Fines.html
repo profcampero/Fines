@@ -1,0 +1,2115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fines Artística - Prof. Horacio Campero</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --surface: rgba(30, 41, 59, 0.7);
+            --surface-hover: rgba(30, 41, 59, 0.9);
+            --surface-active: rgba(59, 130, 246, 0.15);
+            --border: rgba(255, 255, 255, 0.1);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --danger: #ef4444;
+            --success: #10b981;
+            --radius-lg: 16px;
+            --radius-md: 8px;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,0.3) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,0.3) 0, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        header {
+            text-align: center;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #60a5fa, #a78bfa);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 99px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+            background: var(--surface-hover);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background: var(--surface);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr 2fr;
+            }
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.25rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        input, select {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 0.75rem 1rem;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        select option {
+            background: #1e293b;
+            color: white;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+        }
+
+        .btn {
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-danger {
+            background: transparent;
+            color: var(--danger);
+            padding: 0.5rem;
+            border-radius: var(--radius-md);
+            width: auto;
+        }
+
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        /* Tables */
+        .table-container {
+            overflow-x: auto;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: rgba(15, 23, 42, 0.9);
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        tbody tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-secondary);
+        }
+
+        /* Attendance List Layout */
+        .students-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .student-check-card {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .student-check-card:hover {
+            background: rgba(15, 23, 42, 0.8);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .student-check-card.checked {
+            background: var(--surface-active);
+            border-color: var(--primary);
+        }
+
+        /* Toggle Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+
+        .switch input { 
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(255,255,255,0.1);
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--success);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+
+        /* Informes */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .stat-card .label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Filters inline */
+        .filters-inline {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            margin-bottom: 1.5rem;
+        }
+
+        .filters-inline .input-group {
+            margin-bottom: 0;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Modal System */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+            animation: fadeInDown 0.4s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+            margin-bottom: auto;
+            margin-top: 5vh;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .modal-header h2 {
+            margin-bottom: 0;
+        }
+        .btn-close {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 2.5rem;
+            cursor: pointer;
+            line-height: 0.5;
+            transition: var(--transition);
+        }
+        .btn-close:hover {
+            color: var(--danger);
+        }
+
+        /* Status colors */
+        .status-absent { color: var(--danger); }
+        .status-present { color: var(--success); }
+        .row-absent { background: rgba(239, 68, 68, 0.05) !important; }
+
+        /* Print formatting */
+        #print-container { display: none; }
+        @media print {
+            body { background: white !important; color: black !important; padding: 0 !important; display: block !important; }
+            .app-container { display: none !important; }
+            #print-container { display: block !important; width: 100% !important; font-family: 'Inter', sans-serif; }
+            #print-container h1 { color: black !important; font-size: 1.6rem; text-align: center; border-bottom: 2px solid black; padding-bottom: 5px; margin-bottom: 15px; }
+            #print-container h2 { color: black !important; font-size: 1.4rem; margin-bottom: 0.5rem; }
+
+            #print-container h3 { color: black !important; font-size: 1.1rem; margin-bottom: 0.5rem; }
+            #print-container p { color: black !important; margin-bottom: 0.3rem; font-size: 0.9rem; }
+            #print-container .mb-4 { margin-bottom: 1.2rem; }
+            #print-container table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.85rem; table-layout: auto; }
+            #print-container th, #print-container td { border: 1px solid #ccc !important; padding: 0.5rem; text-align: left; color: black !important; word-break: break-word; }
+            #print-container th { background: #f4f4f5 !important; font-weight: 600; text-transform: uppercase; font-size: 0.75rem; }
+            .row-absent { background: #fee2e2 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            @page { margin: 0.5cm; size: auto; }
+        }
+
+        /* Save Notification */
+        #save-notification {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--success);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 99px;
+            font-weight: 600;
+            box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.4);
+            z-index: 2000;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        #save-notification.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Portable Mode Styles */
+        .portable-mode .admin-only {
+            display: none !important;
+        }
+        .portable-mode .grid-2 {
+            display: block !important;
+        }
+        .portable-mode .tab-btn[onclick*="exportData"] {
+            display: none !important;
+        }
+        .portable-mode input, 
+        .portable-mode .student-check-card {
+            pointer-events: none;
+        }
+        /* Allow interaction with navigation, print buttons and selects */
+        .portable-mode .tabs, 
+        .portable-mode .tab-btn, 
+        .portable-mode .btn, 
+        .portable-mode select, 
+        .portable-mode .filters-inline input {
+            pointer-events: auto;
+        }
+        .portable-banner {
+            display: none;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 0.75rem;
+            text-align: center;
+            border-radius: var(--radius-md);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+        .portable-mode .portable-banner {
+            display: block;
+        }
+
+        @media (max-width: 640px) {
+            h1 { font-size: 1.8rem; }
+            .card { padding: 1.25rem; }
+            .tabs { gap: 0.5rem; }
+            .tab-btn { padding: 0.6rem 1rem; font-size: 0.9rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .filters-inline { flex-direction: column; align-items: stretch; }
+            .filters-inline .input-group { min-width: 100%; }
+            
+            /* Responsive tables for mobile view */
+            .table-container { border: none; }
+            table, thead, tbody, th, td, tr { display: block; }
+            thead tr { position: absolute; top: -9999px; left: -9999px; }
+            tr { margin-bottom: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: var(--radius-md); padding: 0.5rem; border: 1px solid var(--border); }
+            td { border: none; position: relative; padding-left: 50% !important; text-align: right !important; min-height: 2.5rem; display: flex; align-items: center; justify-content: flex-end; }
+            td:before { position: absolute; left: 1rem; width: 45%; padding-right: 10px; white-space: nowrap; content: attr(data-label); font-weight: 600; color: var(--text-secondary); text-align: left; }
+            td:last-child { border-bottom: none; }
+        }
+
+        /* Print formatting optimized for digital viewing as well */
+        #print-container { display: none; }
+        @media print {
+            body { background: white !important; color: black !important; padding: 0.5cm !important; display: block !important; }
+            .app-container { display: none !important; }
+            #print-container { display: block !important; width: 100% !important; font-family: 'Inter', sans-serif; }
+            #print-container h1 { color: black !important; font-size: 1.6rem; text-align: center; border-bottom: 2px solid black; padding-bottom: 5px; margin-bottom: 15px; }
+            #print-container h2 { color: black !important; font-size: 1.4rem; margin-bottom: 0.5rem; }
+            #print-container table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.85rem; table-layout: fixed; }
+            #print-container th, #print-container td { border: 1px solid #ccc !important; padding: 0.5rem; text-align: left; color: black !important; word-break: break-word; overflow-wrap: break-word; }
+            #print-container th { background: #f4f4f5 !important; font-weight: 600; }
+            .row-absent { background: #fee2e2 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            @page { margin: 0.5cm; size: auto; }
+        }
+    </style>
+
+</head>
+<body>
+    <div id="save-notification">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"></path></svg>
+        Cambios guardados
+    </div>
+    <div id="print-container"></div>
+    <div class="app-container">
+        <div class="portable-banner">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align: middle; margin-right: 5px;"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            Modo Visualización: Los datos en esta versión son solo para lectura.
+        </div>
+        <header>
+            <h1>Prof. Horacio Campero</h1>
+
+            <nav class="tabs">
+
+                <button class="tab-btn active" data-tab="tab-alumnos">Alumnos</button>
+                <button class="tab-btn" data-tab="tab-examenes">Exámenes</button>
+                <button class="tab-btn" data-tab="tab-asistencias">Asistencia</button>
+                <button class="tab-btn" data-tab="tab-informes">Informes por Día</button>
+                <button class="tab-btn" onclick="exportData()" title="Descargar copia del sistema con todos tus datos integrados." style="border-color: var(--primary); color: var(--primary);">Exportar App Portátil</button>
+            </nav>
+        </header>
+
+        <main>
+            <!-- TAB: ALUMNOS (Base de datos) -->
+            <div id="tab-alumnos" class="tab-content active">
+                <div class="grid-2">
+                    <div class="admin-only">
+                        <section class="card">
+                            <h2>Agregar Alumno</h2>
+                            <form id="student-form">
+                                <div class="input-group">
+                                    <label for="st-name">Nombre y Apellido</label>
+                                    <input type="text" id="st-name" required placeholder="Ej: Ana Gómez" autocomplete="off">
+                                </div>
+                                <div class="input-group">
+                                    <label for="st-dni">DNI</label>
+                                    <input type="text" id="st-dni" placeholder="Ej: 12345678" autocomplete="off">
+                                </div>
+                                <div class="input-group">
+                                    <label for="st-phone">Teléfono</label>
+                                    <input type="text" id="st-phone" placeholder="Ej: 11 1234-5678" autocomplete="off">
+                                </div>
+                                <div class="input-group">
+                                    <label for="st-course">Curso / Nivel</label>
+                                    <input type="text" id="st-course" required list="course-suggestions" placeholder="Ej: Guitarra Inicial" autocomplete="off">
+                                    <datalist id="course-suggestions"></datalist>
+                                </div>
+                                <button type="submit" id="btn-save-student" class="btn btn-primary">Guardar Alumno</button>
+                                <button type="button" id="btn-cancel-edit" class="btn btn-danger" style="display: none; margin-top: 0.5rem; width: 100%; border: 1px solid var(--danger);" onclick="cancelEdit()">Cancelar Edición</button>
+                            </form>
+                        </section>
+
+                        <section class="card admin-only">
+                            <h2>Gestión de Datos</h2>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">Exportar, restaurar o configurar enlaces.</p>
+                            <div style="display: flex; gap: 1rem; flex-direction: column;">
+                                <button class="btn btn-primary" onclick="openCourseLinksModal()" style="background: rgba(167, 139, 250, 0.2); color: #a78bfa; border: 1px solid #a78bfa; justify-content: center;">
+                                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                                    Enlaces de Cursos
+                                </button>
+                                <button class="btn btn-primary" onclick="window.exportJSON()" style="background: rgba(16, 185, 129, 0.2); color: var(--success); border: 1px solid var(--success); justify-content: center;">
+                                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-3 3m0 0l-3-3m3 3V4"></path></svg>
+                                    Exportar Copia
+                                </button>
+                                <div>
+                                    <button class="btn" style="background: rgba(59, 130, 246, 0.2); color: var(--primary); border: 1px solid var(--primary); width: 100%; cursor: pointer; display: flex; justify-content: center; align-items: center;" onclick="document.getElementById('import-file').click()">
+                                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-3-3m0 0L8 8m3-3v12"></path></svg>
+                                        Importar Copia
+                                    </button>
+                                    <input type="file" id="import-file" accept=".json" style="display: none;">
+                                </div>
+                                <button id="btn-link-fs" class="btn" style="background: rgba(16, 185, 129, 0.2); color: var(--success); border: 1px solid var(--success); justify-content: center; display: none;" onclick="linkHTMLFile()">
+                                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
+                                    Vincular para Autoguardado
+                                </button>
+                            </div>
+                        </section>
+                    </div>
+
+                    <section class="card">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; margin-bottom: 1rem; gap: 1rem;">
+                            <h2 style="margin-bottom: 0;">Base de Alumnos</h2>
+                            <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                                <div class="input-group" style="margin-bottom: 0; min-width: 200px;">
+                                    <select id="filter-students-course">
+                                        <option value="ALL" selected>Todos los cursos</option>
+                                    </select>
+                                </div>
+                                <div class="input-group" style="margin-bottom: 0; min-width: 150px;">
+                                    <select id="filter-students-musicca">
+                                        <option value="ALL" selected>Musicca: Todos</option>
+                                        <option value="CHECKED">Musicca: Marcados</option>
+                                        <option value="UNCHECKED">Musicca: Sin marcar</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="course-links-display-students" style="margin-bottom: 1.5rem; display: none; gap: 1rem; flex-wrap: wrap;"></div>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Curso</th>
+                                        <th style="width: 100px; text-align: center;">Musicca</th>
+                                        <th style="width: 120px; text-align: center;" class="admin-only">Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="student-list">
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- TAB: EXAMENES -->
+            <div id="tab-examenes" class="tab-content">
+                <section class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; margin-bottom: 1.5rem; gap: 1rem;">
+                        <h2 style="margin-bottom: 0;">Registro de Exámenes</h2>
+                        <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                            <button class="btn" style="width: auto; background: var(--surface-hover); color: var(--primary); border: 1px solid var(--primary); padding: 0.5rem 1rem;" onclick="printCourseGrades()">
+                                Imprimir Notas Totales
+                            </button>
+                            <div class="input-group" style="margin-bottom: 0; min-width: 200px;">
+                                <select id="filter-exams-course">
+                                    <option value="ALL" selected>Todos los cursos</option>
+                                </select>
+                            </div>
+                            <div class="input-group" style="margin-bottom: 0; min-width: 150px;">
+                                <select id="filter-exams-status">
+                                    <option value="ALL" selected>Todos los estados</option>
+                                    <option value="APROBADOS">Aprobados</option>
+                                    <option value="RECUPERATORIO">Recuperatorio</option>
+                                    <option value="REPROBADOS">Reprobados</option>
+                                    <option value="SIN_NOTA">Sin nota</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Curso</th>
+                                    <th style="text-align: center;">Cant. Exámenes</th>
+                                    <th>Tema y Nota</th>
+                                    <th style="text-align: center;">Promedio</th>
+                                    <th style="width: 120px; text-align: center;" class="admin-only">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="exam-list">
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <!-- TAB: ASISTENCIA -->
+            <div id="tab-asistencias" class="tab-content">
+                <section class="card">
+                    <h2>Registrar Asistencia</h2>
+                    <form id="attendance-filter-form" class="filters-inline">
+                        <div class="input-group">
+                            <label for="att-date">Fecha de Clase</label>
+                            <input type="date" id="att-date" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="att-course">Seleccionar Curso</label>
+                            <select id="att-course" required>
+                                <option value="" disabled selected>Elija un curso...</option>
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+                        <div class="input-group" style="flex: 1.5; min-width: 250px;">
+                            <label for="att-topic">Tema del día</label>
+                            <input type="text" id="att-topic" placeholder="Ej: Revolución de Mayo" autocomplete="off">
+                        </div>
+                    </form>
+
+                    <div id="attendance-action-area" style="display: none;">
+                        <h3 style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                            <span>Alumnos del curso <span id="lbl-selected-course" style="color:var(--text-primary); font-weight: 600;"></span></span>
+                            <div id="course-links-display-attendance" style="display: flex; gap: 0.5rem;"></div>
+                        </h3>
+                        <div id="attendance-students-list" class="students-grid">
+                            <!-- Checkboxes populated here -->
+                        </div>
+                        <div style="margin-top: 2rem; text-align: right;" class="admin-only">
+                            <button class="btn btn-primary" id="btn-save-attendance" style="width: auto; padding: 0.75rem 2rem;">Guardar Asistencias</button>
+                        </div>
+                    </div>
+                    <div id="attendance-empty-area" class="empty-state">
+                        Seleccione una fecha y un curso para cargar asistencias.
+                    </div>
+                </section>
+            </div>
+
+            <!-- TAB: INFORMES -->
+            <div id="tab-informes" class="tab-content">
+                <section class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
+                        <h2>Informe de Asistencia Diario</h2>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn" style="width: auto; background: var(--surface-hover); color: var(--success); border: 1px solid var(--success);" onclick="showAbsenceSummary()">
+                                TOTAL AUSENCIAS
+                            </button>
+                            <button class="btn" style="width: auto; background: var(--surface-hover); color: var(--primary); border: 1px solid var(--primary);" onclick="printDailyReport()">
+                                IMPRIMIR REPORTE
+                            </button>
+                        </div>
+                    </div>
+                    <div class="filters-inline" style="margin-top: 1rem;">
+                        <div class="input-group" style="max-width: 300px;">
+                            <label for="rep-date">Seleccionar Fecha</label>
+                            <input type="date" id="rep-date">
+                        </div>
+                        <div class="input-group" style="max-width: 300px;">
+                            <label for="rep-course">Seleccionar Curso</label>
+                            <select id="rep-course">
+                                <option value="ALL" selected>Todos los cursos</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="report-content" style="display: none;">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <span class="label">Total Presentes</span>
+                                <span class="value" id="rep-total">0</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="label">Total Ausentes</span>
+                                <span class="value" id="rep-ausentes">0</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="label">Cursos Activos</span>
+                                <span class="value" id="rep-courses-count">0</span>
+                            </div>
+                        </div>
+
+                        <h2>Detalle de Presentes</h2>
+                        <div class="table-container" style="max-height: none;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Alumno</th>
+                                        <th>Curso</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="report-table-body">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="report-empty" class="empty-state">
+                        Seleccione una fecha para visualizar el informe.
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- MODAL HISTORIAL ALUMNO -->
+        <div id="student-modal" class="modal">
+            <div class="modal-content card">
+                <div class="modal-header">
+                    <div>
+                        <h2 id="modal-student-name" style="margin-bottom: 0;">Historial</h2>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem;" id="modal-student-details"></div>
+                    </div>
+                    <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                        <button class="btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem; width: auto; border-radius: var(--radius-md); border: none; cursor: pointer; margin-top: 0.3rem;" onclick="printStudentModal()">Imprimir Ficha</button>
+                        <button class="btn-close" onclick="closeModal()" title="Cerrar">&times;</button>
+                    </div>
+                </div>
+                <div class="stats-grid" style="margin-bottom: 1rem; grid-template-columns: 1fr 1fr;">
+                    <div class="stat-card" style="padding: 1.25rem;">
+                        <span class="label">Total Asistencias</span>
+                        <span class="value" id="modal-total-att">0</span>
+                    </div>
+                    <div class="stat-card" id="modal-average-box" style="padding: 1.25rem; display: none; align-items: center; justify-content: center;">
+                        <span class="label" style="text-align: center;">Promedio Exámenes</span>
+                        <div style="display: flex; align-items: baseline; justify-content: center; gap: 0.5rem; margin-top: 0.25rem;">
+                            <span class="value" id="modal-average-val">0</span>
+                            <span id="modal-average-status" style="padding: 0.2rem 0.5rem; border-radius: 99px; font-size: 0.8rem; font-weight: 600;"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 0.5rem; margin-bottom: 0.5rem; font-size: 1rem; color: var(--text-primary);">Asistencias</h3>
+                <div class="table-container" style="max-height: 200px; margin-bottom: 1.5rem;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Curso</th>
+                            </tr>
+                        </thead>
+                        <tbody id="modal-history-body">
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 style="margin-bottom: 0.5rem; font-size: 1rem; color: var(--text-primary);">Notas / Exámenes</h3>
+                <form id="add-grade-form" class="filters-inline admin-only" style="margin-bottom: 1rem; align-items: flex-end;">
+                    <input type="hidden" id="grade-student-id">
+                    <div class="input-group" style="flex: 2; margin-bottom: 0;">
+                        <label for="grade-desc" style="font-size: 0.8rem;">Evaluación / Examen</label>
+                        <input type="text" id="grade-desc" required placeholder="Ej: Parcial 1" autocomplete="off" style="padding: 0.5rem;">
+                    </div>
+                    <div class="input-group" style="flex: 1; margin-bottom: 0; min-width: 100px;">
+                        <label for="grade-val" style="font-size: 0.8rem;">Nota</label>
+                        <input type="text" id="grade-val" required placeholder="Ej: 9" autocomplete="off" style="padding: 0.5rem;">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="padding: 0.5rem 1rem; width: auto; height: 42px;">Añadir</button>
+                </form>
+                
+                <div class="table-container" style="max-height: 200px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Evaluación</th>
+                                <th>Nota</th>
+                                <th>Estado</th>
+                                <th>Fecha</th>
+                                <th style="width: 50px;" class="admin-only"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="modal-grades-body">
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- MODAL GESTION ENLACES DE CURSOS -->
+        <div id="course-links-modal" class="modal">
+            <div class="modal-content card" style="max-width: 700px;">
+                <div class="modal-header">
+                    <h2 style="margin-bottom: 0;">Enlaces por Curso</h2>
+                    <button class="btn-close" onclick="closeCourseLinksModal()">&times;</button>
+                </div>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Asigna links de Classroom y Musicca para cada curso/nivel. Se mostrarán como botones de acceso rápido.</p>
+                
+                <div class="table-container" style="max-height: 400px; margin-bottom: 1.5rem;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Curso</th>
+                                <th>Link Classroom</th>
+                                <th>Link Musicca</th>
+                            </tr>
+                        </thead>
+                        <tbody id="course-links-table-body">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+                <div style="text-align: right;">
+                    <button class="btn btn-primary" onclick="saveCourseLinks()" style="width: auto; padding: 0.75rem 2.5rem;">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+        <!-- MODAL DIALOGO SEGURO -->
+        <div id="dialog-modal" class="modal">
+            <div class="modal-content card" style="max-width: 400px; text-align: center; margin-top: 20vh;">
+                <h3 id="dialog-msg" style="margin-bottom: 2rem; font-size: 1.1rem; font-weight: 500; color: var(--text-primary); line-height: 1.5;"></h3>
+                <div style="display: flex; gap: 1rem; justify-content: center;">
+                    <button class="btn" id="btn-dialog-cancel" style="background: var(--surface-hover); color: var(--text-primary); width: auto; border: 1px solid var(--border);">Cancelar</button>
+                    <button class="btn btn-primary" id="btn-dialog-confirm" style="width: auto;">Aceptar</button>
+                </div>
+            </div>
+        </div>
+
+        <footer style="text-align: center; color: var(--text-secondary); font-size: 0.9rem; padding: 1rem;">
+            Desarrollado por Prodabiertas - <a href="https://www.prodabiertas.com.ar" target="_blank" style="color: var(--primary); text-decoration: none;">www.prodabiertas.com.ar</a>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // -- CUSTOM MODALS --
+            window.showConfirm = function(msg) {
+                return new Promise(resolve => {
+                    const modal = document.getElementById('dialog-modal');
+                    document.getElementById('dialog-msg').innerText = msg;
+                    const btnCancel = document.getElementById('btn-dialog-cancel');
+                    const btnConfirm = document.getElementById('btn-dialog-confirm');
+                    btnCancel.style.display = 'inline-flex';
+                    
+                    btnCancel.onclick = () => { modal.classList.remove('active'); resolve(false); };
+                    btnConfirm.onclick = () => { modal.classList.remove('active'); resolve(true); };
+                    
+                    modal.classList.add('active');
+                });
+            };
+
+            window.showAlert = function(msg) {
+                return new Promise(resolve => {
+                    const modal = document.getElementById('dialog-modal');
+                    document.getElementById('dialog-msg').innerText = msg;
+                    const btnCancel = document.getElementById('btn-dialog-cancel');
+                    const btnConfirm = document.getElementById('btn-dialog-confirm');
+                    btnCancel.style.display = 'none';
+                    
+                    btnConfirm.onclick = () => { modal.classList.remove('active'); resolve(true); };
+                    
+                    modal.classList.add('active');
+                });
+            };
+
+            // -- SAVE NOTIFICATION --
+            let saveTimeout;
+            window.showSaveToast = function() {
+                const toast = document.getElementById('save-notification');
+                if (!toast) return;
+                
+                toast.classList.add('show');
+                clearTimeout(saveTimeout);
+                saveTimeout = setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2000);
+            };
+
+            // CHECK FOR PORTABLE MODE
+            if (window.__PORTABLE_MODE__) {
+                document.body.classList.add('portable-mode');
+            }
+
+            // CHECK FOR EMBEDDED DATA
+            if (window.__APP_EMBEDDED_DATA__) {
+                try {
+                    const embedded = JSON.parse(decodeURIComponent(escape(atob(window.__APP_EMBEDDED_DATA__))));
+                    if (await window.showConfirm(`Este archivo contiene una copia de seguridad generada el ${new Date(embedded.exportDate).toLocaleDateString()}.\n\n¿Deseas sobreescribir los datos locales actuales con los que vienen en el archivo?`)) {
+                        localStorage.setItem('sys_students', JSON.stringify(embedded.students || []));
+                        localStorage.setItem('sys_attendances', JSON.stringify(embedded.attendances || []));
+                        localStorage.setItem('sys_grades', JSON.stringify(embedded.grades || []));
+                        localStorage.setItem('sys_course_links', JSON.stringify(embedded.courseLinks || {}));
+                        await window.showAlert("Datos cargados exitosamente.");
+                    }
+                    delete window.__APP_EMBEDDED_DATA__;
+                } catch (e) {
+                    console.error("Error leyendo datos", e);
+                }
+            }
+
+            // -- DATA LAYER --
+            let students = JSON.parse(localStorage.getItem('sys_students')) || [];
+            let attendances = JSON.parse(localStorage.getItem('sys_attendances')) || [];
+            let grades = JSON.parse(localStorage.getItem('sys_grades')) || [];
+            let courseLinks = JSON.parse(localStorage.getItem('sys_course_links')) || {};
+
+            window.fileHandle = null;
+
+            async function autoSaveToHTML() {
+                if (!window.fileHandle) return;
+                try {
+                    const data = {
+                        students: JSON.parse(localStorage.getItem('sys_students') || '[]'),
+                        attendances: JSON.parse(localStorage.getItem('sys_attendances') || '[]'),
+                        grades: JSON.parse(localStorage.getItem('sys_grades') || '[]'),
+                        courseLinks: JSON.parse(localStorage.getItem('sys_course_links') || '{}'),
+                        exportDate: new Date().toISOString()
+                    };
+                    
+                    let html = document.documentElement.outerHTML;
+                    const encodedData = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+                    const dataScript = `<script id="sys-embedded-data">window.__APP_EMBEDDED_DATA__ = "${encodedData}";<\/script>`;
+                    
+                    const regex = /<script id="sys-embedded-data">.*?<\/script>/;
+                    if (regex.test(html)) {
+                        html = html.replace(regex, dataScript);
+                    } else {
+                        html = html.replace('</head>', `    ${dataScript}\n</head>`);
+                    }
+                    
+                    const finalHTML = "<!DOCTYPE html>\n<html lang=\"es\">\n" + html;
+                    const writable = await window.fileHandle.createWritable();
+                    await writable.write(finalHTML);
+                    await writable.close();
+                } catch (err) {
+                    console.error("Fallo al guardar en el archivo HTML directamente:", err);
+                }
+            }
+
+            function saveStudents() { localStorage.setItem('sys_students', JSON.stringify(students)); window.showSaveToast(); autoSaveToHTML(); }
+            function saveAttendances() { localStorage.setItem('sys_attendances', JSON.stringify(attendances)); window.showSaveToast(); autoSaveToHTML(); }
+            function saveGrades() { localStorage.setItem('sys_grades', JSON.stringify(grades)); window.showSaveToast(); autoSaveToHTML(); }
+            function saveCourseLinksData() { localStorage.setItem('sys_course_links', JSON.stringify(courseLinks)); window.showSaveToast(); autoSaveToHTML(); }
+
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('att-date').value = today;
+            document.getElementById('rep-date').value = today;
+
+            // -- TAB MANAGEMENT --
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    btn.classList.add('active');
+                    document.getElementById(btn.dataset.tab).classList.add('active');
+
+                    // Refresh Views based on tab
+                    if(btn.dataset.tab === 'tab-asistencias') updateCourseSelects();
+                    if(btn.dataset.tab === 'tab-informes') updateReport();
+                });
+            });
+
+            // -- VIEW UPDATERS --
+            function updateStudentViews() {
+                // Update table
+                const tbody = document.getElementById('student-list');
+                tbody.innerHTML = '';
+                const filterVal = document.getElementById('filter-students-course') ? document.getElementById('filter-students-course').value : 'ALL';
+                const filterMusicca = document.getElementById('filter-students-musicca') ? document.getElementById('filter-students-musicca').value : 'ALL';
+                
+                let filteredStudents = students;
+                if (filterVal && filterVal !== 'ALL') {
+                    filteredStudents = students.filter(s => s.course === filterVal);
+                }
+
+                if (filterMusicca === 'CHECKED') {
+                    filteredStudents = filteredStudents.filter(s => s.obs);
+                } else if (filterMusicca === 'UNCHECKED') {
+                    filteredStudents = filteredStudents.filter(s => !s.obs);
+                }
+                
+                if (filteredStudents.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="3" class="empty-state">No hay alumnos para mostrar.</td></tr>`;
+                } else {
+                    filteredStudents.forEach(st => {
+                        const tr = document.createElement('tr');
+
+                        tr.innerHTML = `
+                            <td data-label="Nombre"><strong>${st.name}</strong></td>
+                            <td data-label="Curso">${st.course}</td>
+                            <td data-label="Musicca" style="text-align: center;">
+                                <input type="checkbox" ${st.obs ? 'checked' : ''} onchange="toggleStudentObs(${st.id}, this.checked)" style="width: 18px; height: 18px; cursor: pointer;" ${window.__PORTABLE_MODE__ ? 'disabled' : ''}>
+                            </td>
+                            <td style="text-align: center; display: flex; justify-content: center; gap: 0.5rem;" class="admin-only">
+                                <button class="btn-primary" style="padding: 0.4rem; background: rgba(16, 185, 129, 0.2); color: var(--success);" onclick="viewStudentHistory(${st.id})" title="Ver Historial">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                </button>
+                                <button class="btn-primary" style="padding: 0.4rem; background: rgba(59, 130, 246, 0.2); color: var(--primary);" onclick="editStudent(${st.id})" title="Editar Alumno">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </button>
+                                <button class="btn-danger" style="padding: 0.4rem;" onclick="deleteStudent(${st.id})" title="Eliminar Alumno">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6"></path></svg>
+                                </button>
+                            </td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+
+                // Update Course Links Display
+                const linkDisplay = document.getElementById('course-links-display-students');
+                if (filterVal && filterVal !== 'ALL' && courseLinks[filterVal]) {
+                    const links = courseLinks[filterVal];
+                    let html = '';
+                    if (links.classroom) html += `<a href="${links.classroom}" target="_blank" class="btn" style="width:auto; padding: 0.4rem 0.8rem; background: #00701a; color: white; font-size: 0.8rem;"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" style="margin-right:4px;"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg> Classroom</a>`;
+                    if (links.musicca) html += `<a href="${links.musicca}" target="_blank" class="btn" style="width:auto; padding: 0.4rem 0.8rem; background: #eab308; color: black; font-size: 0.8rem;"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" style="margin-right:4px;"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg> Musicca</a>`;
+                    
+                    if (html) {
+                        linkDisplay.innerHTML = `<span style="font-size: 0.85rem; color: var(--text-secondary); display: flex; align-items: center;">Enlaces del curso:</span> ${html}`;
+                        linkDisplay.style.display = 'flex';
+                    } else {
+                        linkDisplay.style.display = 'none';
+                    }
+                } else {
+                    linkDisplay.style.display = 'none';
+                }
+
+                // Update datalist for autocompletion
+                const courses = [...new Set(students.map(s => s.course))].sort();
+                const datalist = document.getElementById('course-suggestions');
+                datalist.innerHTML = '';
+                courses.forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c;
+                    datalist.appendChild(opt);
+                });
+                
+                updateExamViews();
+            }
+
+            function updateExamViews() {
+                const tbody = document.getElementById('exam-list');
+                if (!tbody) return;
+                tbody.innerHTML = '';
+                const filterVal = document.getElementById('filter-exams-course') ? document.getElementById('filter-exams-course').value : 'ALL';
+                const filterStatus = document.getElementById('filter-exams-status') ? document.getElementById('filter-exams-status').value : 'ALL';
+                
+                let filteredStudents = students;
+                if (filterVal && filterVal !== 'ALL') {
+                    filteredStudents = students.filter(s => s.course === filterVal);
+                }
+
+                // Apply status filter
+                if (filterStatus !== 'ALL') {
+                    filteredStudents = filteredStudents.filter(st => {
+                        const stG = grades.filter(g => g.studentId == st.id);
+                        const avg = stG.length ? (stG.reduce((sum, g) => sum + (parseFloat(g.val)||0), 0) / stG.length) : null;
+                        
+                        if (filterStatus === 'APROBADOS') return avg !== null && avg >= 7;
+                        if (filterStatus === 'RECUPERATORIO') return avg !== null && avg >= 4 && avg < 7;
+                        if (filterStatus === 'REPROBADOS') return avg !== null && avg < 4;
+                        if (filterStatus === 'SIN_NOTA') return stG.length === 0;
+                        return true;
+                    });
+                }
+                
+                if (filteredStudents.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6" class="empty-state">No hay alumnos para mostrar.</td></tr>`;
+                } else {
+                    filteredStudents.forEach(st => {
+                        const tr = document.createElement('tr');
+                        const stG = grades.filter(g => g.studentId == st.id).sort((a,b) => new Date(a.date) - new Date(b.date));
+                        const cant = stG.length;
+                        const list = stG.length ? stG.map(g => `${g.desc} (${g.val})`).join('<br>') : '-';
+                        const avg = stG.length ? (stG.reduce((sum, g) => sum + (parseFloat(g.val)||0), 0) / stG.length).toFixed(2) : '-';
+
+                        tr.innerHTML = `
+                            <td data-label="Nombre"><strong>${st.name}</strong></td>
+                            <td data-label="Curso">${st.course}</td>
+                            <td data-label="Cant. Exámenes" style="text-align: center;">${cant}</td>
+                            <td data-label="Tema y Nota" style="color: var(--text-secondary); font-size: 0.85rem;">${list}</td>
+                            <td data-label="Promedio" style="text-align: center; font-weight: bold; color: var(--primary);">${avg}</td>
+                            <td style="text-align: center; display: flex; justify-content: center; gap: 0.5rem;" class="admin-only">
+                                <button class="btn-primary" style="padding: 0.4rem; background: rgba(16, 185, 129, 0.2); color: var(--success);" onclick="viewStudentHistory(${st.id})" title="Ver Historial">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                </button>
+                            </td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+            }
+
+            function updateCourseSelects() {
+                const courses = [...new Set(students.map(s => s.course))].sort();
+
+                // Para Asistencias
+                const attSelect = document.getElementById('att-course');
+                const attVal = attSelect.value;
+                
+                attSelect.innerHTML = '<option value="" disabled selected>Elija un curso...</option>';
+                courses.forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c;
+                    opt.text = c;
+                    attSelect.appendChild(opt);
+                });
+
+                if (courses.includes(attVal)) attSelect.value = attVal;
+                else renderAttendanceList(); // hide if course no longer exists
+
+                // Para Informes
+                const repSelect = document.getElementById('rep-course');
+                if (repSelect) {
+                    const repVal = repSelect.value;
+                    repSelect.innerHTML = '<option value="ALL">Todos los cursos</option>';
+                    courses.forEach(c => {
+                        const opt = document.createElement('option');
+                        opt.value = c;
+                        opt.text = c;
+                        repSelect.appendChild(opt);
+                    });
+                    if (courses.includes(repVal) || repVal === 'ALL') repSelect.value = repVal;
+                }
+
+                // Para Alumnos (Filtro)
+                const filterSelect = document.getElementById('filter-students-course');
+                if (filterSelect) {
+                    const filterVal = filterSelect.value;
+                    filterSelect.innerHTML = '<option value="ALL">Todos los cursos</option>';
+                    courses.forEach(c => {
+                        const opt = document.createElement('option');
+                        opt.value = c;
+                        opt.text = c;
+                        filterSelect.appendChild(opt);
+                    });
+                    if (courses.includes(filterVal) || filterVal === 'ALL') filterSelect.value = filterVal;
+                }
+                
+                // Para Exámenes (Filtro)
+                const filterExamsSelect = document.getElementById('filter-exams-course');
+                if (filterExamsSelect) {
+                    const filterVal = filterExamsSelect.value;
+                    filterExamsSelect.innerHTML = '<option value="ALL">Todos los cursos</option>';
+                    courses.forEach(c => {
+                        const opt = document.createElement('option');
+                        opt.value = c;
+                        opt.text = c;
+                        filterExamsSelect.appendChild(opt);
+                    });
+                    if (courses.includes(filterVal) || filterVal === 'ALL') filterExamsSelect.value = filterVal;
+                }
+            }
+
+            const stuFilterSel = document.getElementById('filter-students-course');
+            if (stuFilterSel) {
+                stuFilterSel.addEventListener('change', updateStudentViews);
+            }
+            const stuMusiccaFilterSel = document.getElementById('filter-students-musicca');
+            if (stuMusiccaFilterSel) {
+                stuMusiccaFilterSel.addEventListener('change', updateStudentViews);
+            }
+            
+            const examsFilterSel = document.getElementById('filter-exams-course');
+            if (examsFilterSel) {
+                examsFilterSel.addEventListener('change', updateExamViews);
+            }
+            const examsStatusFilterSel = document.getElementById('filter-exams-status');
+            if (examsStatusFilterSel) {
+                examsStatusFilterSel.addEventListener('change', updateExamViews);
+            }
+
+            // -- EVENT: AGREGAR / EDITAR ALUMNO --
+            let editingStudentId = null;
+
+            window.editStudent = function(id) {
+                const st = students.find(s => s.id === id);
+                if (!st) return;
+                
+                editingStudentId = id;
+                document.getElementById('st-name').value = st.name || '';
+                document.getElementById('st-dni').value = st.dni || '';
+                document.getElementById('st-phone').value = st.phone || '';
+                document.getElementById('st-course').value = st.course || '';
+                
+                document.getElementById('btn-save-student').textContent = "Actualizar Alumno";
+                document.getElementById('btn-cancel-edit').style.display = "block";
+            };
+
+            window.cancelEdit = function() {
+                editingStudentId = null;
+                document.getElementById('st-name').value = '';
+                document.getElementById('st-dni').value = '';
+                document.getElementById('st-phone').value = '';
+                document.getElementById('st-course').value = '';
+                document.getElementById('btn-save-student').textContent = "Guardar Alumno";
+                document.getElementById('btn-cancel-edit').style.display = "none";
+            };
+
+            document.getElementById('student-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const nameInp = document.getElementById('st-name');
+                const dniInp = document.getElementById('st-dni');
+                const phoneInp = document.getElementById('st-phone');
+                const courseInp = document.getElementById('st-course');
+                
+                const name = nameInp.value.trim();
+                const dni = dniInp.value.trim();
+                const phone = phoneInp.value.trim();
+                const course = courseInp.value.trim();
+                
+                if (!name || !course) return;
+
+                if (editingStudentId) {
+                    const idx = students.findIndex(s => s.id === editingStudentId);
+                    if (idx !== -1) {
+                        students[idx].name = name;
+                        students[idx].dni = dni;
+                        students[idx].phone = phone;
+                        students[idx].course = course;
+                        
+                        // Actualizar también el curso en asistencias retroactivamente para evitar inconsistencias
+                        attendances.forEach(a => {
+                            if (a.studentId === editingStudentId) {
+                                a.course = course;
+                            }
+                        });
+                        saveAttendances();
+                    }
+                    cancelEdit();
+                } else {
+                    students.push({
+                        id: Date.now(),
+                        name,
+                        dni,
+                        phone,
+                        course
+                    });
+                    nameInp.value = '';
+                    dniInp.value = '';
+                    phoneInp.value = '';
+                    courseInp.value = '';
+                }
+                
+                saveStudents();
+                updateStudentViews();
+                updateCourseSelects();
+
+                nameInp.focus();
+            });
+
+            window.deleteStudent = async function(id) {
+                if(await window.showConfirm('¿Eliminar alumno de la base de datos? Se mantendrán sus asistencias previas, pero no se listará más.')) {
+                    students = students.filter(s => s.id !== id);
+                    saveStudents();
+                    updateStudentViews();
+                    updateCourseSelects();
+                    // Optional: remove related attendances? kept for historic reports.
+                }
+            };
+
+            window.toggleStudentObs = function(id, checked) {
+                const st = students.find(s => s.id === id);
+                if (st) {
+                    st.obs = checked;
+                    saveStudents();
+                }
+            };
+
+            // -- ASISTENCIAS TAB LOGIC --
+            const attDateInp = document.getElementById('att-date');
+            const attCourseSel = document.getElementById('att-course');
+            
+            function renderAttendanceList() {
+                const date = attDateInp.value;
+                const course = attCourseSel.value;
+                
+                const targetArea = document.getElementById('attendance-action-area');
+                const emptyArea = document.getElementById('attendance-empty-area');
+                const listGrid = document.getElementById('attendance-students-list');
+
+                if (!date || !course) {
+                    targetArea.style.display = 'none';
+                    emptyArea.style.display = 'block';
+                    return;
+                }
+
+                const studentsInCourse = students.filter(s => s.course === course);
+                
+                if (studentsInCourse.length === 0) {
+                    targetArea.style.display = 'none';
+                    emptyArea.textContent = 'No hay alumnos registrados en este curso.';
+                    emptyArea.style.display = 'block';
+                    return;
+                }
+
+                targetArea.style.display = 'block';
+                emptyArea.style.display = 'none';
+                document.getElementById('lbl-selected-course').textContent = course;
+                listGrid.innerHTML = '';
+
+                // Prevent finding past attendances check state
+                const currentAtt = attendances.filter(a => a.date === date && a.course === course);
+                const attendingIds = new Set(currentAtt.map(a => a.studentId));
+                
+                const topicInp = document.getElementById('att-topic');
+                if (window.__PORTABLE_MODE__) topicInp.disabled = true;
+                if (currentAtt.length > 0 && currentAtt[0].topic) {
+                    topicInp.value = currentAtt[0].topic;
+                } else {
+                    topicInp.value = '';
+                }
+
+                studentsInCourse.forEach(st => {
+                    const isChecked = attendingIds.has(st.id);
+                    const card = document.createElement('label');
+                    card.className = `student-check-card ${isChecked ? 'checked' : ''}`;
+                    card.innerHTML = `
+                        <span style="font-weight: 500;">${st.name}</span>
+                        <div class="switch">
+                            <input type="checkbox" value="${st.id}" ${isChecked ? 'checked' : ''} ${window.__PORTABLE_MODE__ ? 'disabled' : ''}>
+                            <span class="slider"></span>
+                        </div>
+                    `;
+                    
+                    // Toggle style and AUTOSAVE on change
+                    const chk = card.querySelector('input');
+                    chk.addEventListener('change', () => {
+                        if (chk.checked) card.classList.add('checked');
+                        else card.classList.remove('checked');
+                        
+                        // Autosave logic
+                        const date = attDateInp.value;
+                        const course = attCourseSel.value;
+                        const topic = document.getElementById('att-topic').value.trim();
+                        const sId = parseInt(chk.value);
+
+                        if (chk.checked) {
+                            // Add if not present
+                            if (!attendances.some(a => a.date === date && a.course === course && a.studentId === sId)) {
+                                attendances.push({ date, course, topic, studentId: sId });
+                            }
+                        } else {
+                            // Remove
+                            attendances = attendances.filter(a => !(a.date === date && a.course === course && a.studentId === sId));
+                        }
+                        saveAttendances();
+                    });
+
+                    listGrid.appendChild(card);
+                });
+
+                // Update Course Links Display for Attendance
+                const linkDisplay = document.getElementById('course-links-display-attendance');
+                if (courseLinks[course]) {
+                    const links = courseLinks[course];
+                    let html = '';
+                    if (links.classroom) html += `<a href="${links.classroom}" target="_blank" class="btn" style="width:auto; padding: 0.4rem 0.6rem; background: #00701a; color: white; font-size: 0.75rem;"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24" style="margin-right:2px;"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg> Classroom</a>`;
+                    if (links.musicca) html += `<a href="${links.musicca}" target="_blank" class="btn" style="width:auto; padding: 0.4rem 0.6rem; background: #eab308; color: black; font-size: 0.75rem;"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24" style="margin-right:2px;"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg> Musicca</a>`;
+                    linkDisplay.innerHTML = html;
+                } else {
+                    linkDisplay.innerHTML = '';
+                }
+            }
+
+            // Autosave topic change
+            document.getElementById('att-topic').addEventListener('input', (e) => {
+                const date = attDateInp.value;
+                const course = attCourseSel.value;
+                const topic = e.target.value.trim();
+                if (!date || !course) return;
+
+                attendances.forEach(a => {
+                    if (a.date === date && a.course === course) {
+                        a.topic = topic;
+                    }
+                });
+                saveAttendances();
+            });
+
+
+            attDateInp.addEventListener('change', renderAttendanceList);
+            attCourseSel.addEventListener('change', renderAttendanceList);
+
+            document.getElementById('btn-save-attendance').addEventListener('click', () => {
+                // Keep for visual feedback, but work is already done by autosave
+                const btn = document.getElementById('btn-save-attendance');
+                const originalText = btn.textContent;
+                btn.textContent = "¡Todo guardado!";
+                btn.style.background = "var(--success)";
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = "";
+                }, 2000);
+            });
+
+
+            // -- INFORMES TAB LOGIC --
+            const repDateInp = document.getElementById('rep-date');
+            
+            function updateReport() {
+                const date = repDateInp.value;
+                const content = document.getElementById('report-content');
+                const empty = document.getElementById('report-empty');
+                
+                if (!date) {
+                    content.style.display = 'none';
+                    empty.style.display = 'block';
+                    return;
+                }
+
+                // Filtrar asistencias de estudiantes que aún existen en la base de datos
+                let todaysAttendances = attendances.filter(a => a.date === date && students.some(s => s.id === a.studentId));
+                
+                const selectedCourse = document.getElementById('rep-course').value;
+                if (selectedCourse && selectedCourse !== 'ALL') {
+                    todaysAttendances = todaysAttendances.filter(a => a.course === selectedCourse);
+                }
+                
+                // Determinar alumnos que deberían estar presentes
+                let studentsInReport = [];
+                if (selectedCourse && selectedCourse !== 'ALL') {
+                    studentsInReport = students.filter(s => s.course === selectedCourse);
+                } else {
+                    // Si es "Todos", mostramos solo los cursos que tuvieron actividad ese día
+                    const coursesWithActivity = new Set(attendances.filter(a => a.date === date).map(a => a.course));
+                    studentsInReport = students.filter(s => coursesWithActivity.has(s.course));
+                }
+
+                if (studentsInReport.length === 0 && todaysAttendances.length === 0) {
+                    content.style.display = 'none';
+                    empty.textContent = 'No hay datos registrados para esta fecha.';
+                    empty.style.display = 'block';
+                    return;
+                }
+
+                content.style.display = 'block';
+                empty.style.display = 'none';
+
+                const presentIds = new Set(todaysAttendances.map(a => a.studentId));
+                const absentStudents = studentsInReport.filter(s => !presentIds.has(s.id));
+                const numAusentes = absentStudents.length;
+
+                document.getElementById('rep-total').textContent = todaysAttendances.length;
+                document.getElementById('rep-ausentes').textContent = numAusentes;
+                
+                const uniqueCourses = new Set([...studentsInReport.map(s => s.course), ...todaysAttendances.map(a => a.course)]);
+                document.getElementById('rep-courses-count').textContent = uniqueCourses.size;
+
+                const tbody = document.getElementById('report-table-body');
+                tbody.innerHTML = '';
+
+                // Combinar presentes y ausentes para la tabla
+                const allReportRows = [
+                    ...todaysAttendances.map(a => ({
+                        studentName: students.find(s => s.id === a.studentId)?.name || 'Alumno Eliminado',
+                        course: a.course,
+                        status: 'Presente',
+                        statusClass: 'status-present',
+                        rowClass: ''
+                    })),
+                    ...absentStudents.map(s => ({
+                        studentName: s.name,
+                        course: s.course,
+                        status: 'Ausente',
+                        statusClass: 'status-absent',
+                        rowClass: 'row-absent'
+                    }))
+                ].sort((a, b) => {
+                    if (a.course !== b.course) return a.course.localeCompare(b.course);
+                    return a.studentName.localeCompare(b.studentName);
+                });
+
+                allReportRows.forEach(record => {
+                    const tr = document.createElement('tr');
+                    if (record.rowClass) tr.className = record.rowClass;
+                    tr.innerHTML = `
+                        <td data-label="Alumno"><strong>${record.studentName}</strong></td>
+                        <td data-label="Curso">${record.course}</td>
+                        <td data-label="Estado"><span class="${record.statusClass}" style="font-weight: 600;">${record.status}</span></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            repDateInp.addEventListener('change', updateReport);
+            document.getElementById('rep-course').addEventListener('change', updateReport);
+
+            // -- MODAL HISTORIAL --
+            window.viewStudentHistory = function(id) {
+                const st = students.find(s => s.id === id);
+                if (!st) return;
+
+                document.getElementById('modal-student-name').textContent = `Historial de ${st.name}`;
+                
+                let detailsHtml = `<strong>Curso:</strong> ${st.course}`;
+                if (st.dni) detailsHtml += ` | <strong>DNI:</strong> ${st.dni}`;
+                if (st.phone) detailsHtml += ` | <strong>Tel:</strong> ${st.phone}`;
+                document.getElementById('modal-student-details').innerHTML = detailsHtml;
+                
+                const myAttendances = attendances.filter(a => a.studentId === id).sort((a, b) => new Date(b.date) - new Date(a.date));
+                document.getElementById('modal-total-att').textContent = myAttendances.length;
+
+                const tbody = document.getElementById('modal-history-body');
+                tbody.innerHTML = '';
+
+                if (myAttendances.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="2" class="empty-state" style="padding: 1.5rem;">Sin asistencias registradas</td></tr>`;
+                } else {
+                    myAttendances.forEach(a => {
+                        const tr = document.createElement('tr');
+                        const parts = a.date.split('-');
+                        const niceDate = parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : a.date;
+                        const topicInfo = a.topic ? ` <span style="color: var(--text-secondary); font-size: 0.85rem;">(${a.topic})</span>` : '';
+
+                        tr.innerHTML = `
+                            <td data-label="Fecha"><strong>${niceDate}</strong></td>
+                            <td data-label="Curso">${a.course}${topicInfo}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+                
+                // Set student id for grades form and populate grades table
+                document.getElementById('grade-student-id').value = id;
+                renderGradesTable(id);
+
+                document.getElementById('student-modal').classList.add('active');
+            };
+
+            function getGradeStatus(val) {
+                const n = parseFloat(val);
+                if (isNaN(n)) return { label: '-', color: 'var(--text-secondary)' };
+                if (n >= 7) return { label: 'Aprobado', color: 'var(--success)' };
+                if (n >= 4) return { label: 'Recuperatorio', color: '#f59e0b' }; // orange
+                return { label: 'Reprobado', color: 'var(--danger)' };
+            }
+
+            function renderGradesTable(studentId) {
+                const tbody = document.getElementById('modal-grades-body');
+                tbody.innerHTML = '';
+                
+                const myGrades = grades.filter(g => g.studentId === studentId).sort((a, b) => new Date(b.date) - new Date(a.date));
+                if (myGrades.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="empty-state" style="padding: 1rem;">Sin calificaciones registradas</td></tr>`;
+                    document.getElementById('modal-average-box').style.display = 'none';
+                } else {
+                    let total = 0;
+                    myGrades.forEach(g => {
+                        const tr = document.createElement('tr');
+                        const parts = g.date.split('-');
+                        const niceDate = parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : g.date;
+                        const status = getGradeStatus(g.val);
+                        total += parseFloat(g.val) || 0;
+
+                        tr.innerHTML = `
+                            <td data-label="Evaluación"><strong>${g.desc}</strong></td>
+                            <td data-label="Nota" style="color: var(--primary); font-weight: 700;">${g.val}</td>
+                            <td data-label="Estado"><span style="display: inline-block; padding: 0.2rem 0.5rem; border-radius: 99px; font-size: 0.8rem; font-weight: 600; background: ${status.color}20; color: ${status.color};">${status.label}</span></td>
+                            <td data-label="Fecha"><small style="color: var(--text-secondary);">${niceDate}</small></td>
+                            <td style="text-align: right;" class="admin-only">
+                                <button class="btn-danger" style="padding: 0.3rem;" onclick="deleteGrade(${g.id})" title="Eliminar Nota">
+                                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6"></path></svg>
+                                </button>
+                            </td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                    
+                    const avg = (total / myGrades.length).toFixed(2);
+                    const avgStatus = getGradeStatus(avg);
+                    
+                    document.getElementById('modal-average-box').style.display = 'flex';
+                    document.getElementById('modal-average-box').style.flexDirection = 'column';
+                    document.getElementById('modal-average-val').textContent = avg;
+                    document.getElementById('modal-average-status').textContent = avgStatus.label;
+                    document.getElementById('modal-average-status').style.color = avgStatus.color;
+                    document.getElementById('modal-average-status').style.backgroundColor = avgStatus.color + '20';
+                }
+            }
+
+            document.getElementById('add-grade-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const studentId = parseInt(document.getElementById('grade-student-id').value);
+                const desc = document.getElementById('grade-desc').value.trim();
+                const val = document.getElementById('grade-val').value.trim();
+                
+                if (!studentId || !desc || !val) return;
+                
+                grades.push({
+                    id: Date.now(),
+                    studentId,
+                    desc,
+                    val,
+                    date: new Date().toISOString().split('T')[0]
+                });
+                
+                saveGrades();
+                renderGradesTable(studentId);
+                if (typeof updateExamViews === 'function') updateExamViews();
+                
+                document.getElementById('grade-desc').value = '';
+                document.getElementById('grade-val').value = '';
+                document.getElementById('grade-desc').focus();
+            });
+
+            window.deleteGrade = async function(id) {
+                if(await window.showConfirm('¿Eliminar esta calificación?')) {
+                    const gradeIndex = grades.findIndex(g => g.id === id);
+                    if (gradeIndex !== -1) {
+                        const studentId = grades[gradeIndex].studentId;
+                        grades.splice(gradeIndex, 1);
+                        saveGrades();
+                        renderGradesTable(studentId);
+                        if (typeof updateExamViews === 'function') updateExamViews();
+                    }
+                }
+            };
+
+            window.closeModal = function() {
+                document.getElementById('student-modal').classList.remove('active');
+            };
+
+            window.addEventListener('click', function(event) {
+                const modal = document.getElementById('student-modal');
+                if (event.target == modal) {
+                    closeModal();
+                }
+            });
+
+            window.addEventListener('afterprint', () => {
+                const pc = document.getElementById('print-container');
+                if (pc) pc.innerHTML = '';
+            });
+
+            // -- PRINT FUNCTIONS --
+            window.printDailyReport = function() {
+                const date = document.getElementById('rep-date').value;
+                const course = document.getElementById('rep-course').value;
+                if (!date) return window.showAlert("Seleccione una fecha primero.");
+                if (document.getElementById('report-empty').style.display === 'block') return window.showAlert("No hay datos para imprimir.");
+
+                // Fetch topics for the day
+                const dayAtts = attendances.filter(a => a.date === date);
+                const topics = [...new Set(dayAtts.filter(a => a.topic).map(a => a.topic))];
+                let topicStr = topics.length > 0 ? `<p style="margin-bottom: 0.2rem;"><strong>Tema(s) del día:</strong> ${topics.join(' / ')}</p>` : '';
+
+                const pc = document.getElementById('print-container');
+                pc.innerHTML = `
+                    <h1 style="text-align: center; border-bottom: 2px solid black; padding-bottom: 5px; margin-bottom: 15px; font-size: 1.6rem;">Fines Artística - Prof. Horacio Campero</h1>
+                    <h2 style="margin-bottom: 0.5rem; font-size: 1.5rem;">Informe de Asistencia Diario</h2>
+                    <p style="margin-bottom: 0.2rem;"><strong>Fecha:</strong> ${date.split('-').reverse().join('/')}</p>
+
+                    <p style="margin-bottom: 0.2rem;"><strong>Curso(s):</strong> ${course === 'ALL' ? 'Todos los cursos' : course}</p>
+                    ${topicStr}
+                    <p style="margin-bottom: 1.5rem;"><strong>Total Presentes:</strong> ${document.getElementById('rep-total').textContent} | <strong>Total Ausentes:</strong> ${document.getElementById('rep-ausentes').textContent} | <strong>Cursos Activos:</strong> ${document.getElementById('rep-courses-count').textContent}</p>
+                    <table>
+                        <thead><tr><th>Alumno</th><th>Curso</th><th>Estado</th></tr></thead>
+                        <tbody>${document.getElementById('report-table-body').innerHTML}</tbody>
+                    </table>
+                `;
+                window.print();
+            };
+
+            window.showAbsenceSummary = function() {
+                const summary = students.map(st => {
+                    // Fechas en las que hubo clases para este curso
+                    const courseDates = [...new Set(attendances.filter(a => a.course === st.course).map(a => a.date))];
+                    // Fechas en las que el alumno estuvo presente
+                    const attendedDates = new Set(attendances.filter(a => a.studentId === st.id).map(a => a.date));
+                    
+                    const absences = courseDates.filter(d => !attendedDates.has(d)).length;
+                    
+                    return {
+                        name: st.name,
+                        course: st.course,
+                        absences: absences
+                    };
+                }).filter(s => s.absences > 0).sort((a,b) => b.absences - a.absences);
+
+                if (summary.length === 0) {
+                    return window.showAlert("No se registran ausencias en los cursos con actividad.");
+                }
+
+                const rows = summary.map(s => `
+                    <tr>
+                        <td><strong>${s.name}</strong></td>
+                        <td>${s.course}</td>
+                        <td style="text-align: center; color: var(--danger); font-weight: bold;">${s.absences}</td>
+                    </tr>
+                `).join('');
+
+                const pc = document.getElementById('print-container');
+                pc.innerHTML = `
+                    <h1 style="text-align: center; border-bottom: 2px solid black; padding-bottom: 5px; margin-bottom: 15px; font-size: 1.6rem;">Fines Artística - Prof. Horacio Campero</h1>
+                    <h2 style="margin-bottom: 0.5rem; font-size: 1.5rem;">Resumen Total de Ausencias</h2>
+
+                    <p style="margin-bottom: 1.5rem;">Listado de alumnos con inasistencias detectadas en días de clase registrados.</p>
+                    <table>
+                        <thead><tr><th>Alumno</th><th>Curso</th><th style="text-align: center;">Cantidad Ausencias</th></tr></thead>
+                        <tbody>${rows}</tbody>
+                    </table>
+                `;
+                window.print();
+            };
+
+            window.printStudentModal = function() {
+                const stId = document.getElementById('grade-student-id').value;
+                if(!stId) return;
+                const st = students.find(s => s.id == stId);
+                if(!st) return;
+
+                const myAtt = attendances.filter(a => a.studentId == stId).sort((a,b) => new Date(b.date) - new Date(a.date));
+                const myG = grades.filter(g => g.studentId == stId).sort((a,b) => new Date(b.date) - new Date(a.date));
+                
+                let avgHtml = '';
+                if(myG.length > 0) {
+                    const avg = (myG.reduce((sum, g) => sum + (parseFloat(g.val)||0), 0) / myG.length).toFixed(2);
+                    avgHtml = `<p style="margin-bottom: 1.5rem;"><strong>Promedio:</strong> ${avg}</p>`;
+                }
+
+                const attRows = myAtt.length ? myAtt.map(a => {
+                    const topicInfo = a.topic ? ` (${a.topic})` : '';
+                    return `<tr><td>${a.date.split('-').reverse().join('/')}</td><td>${a.course}${topicInfo}</td></tr>`;
+                }).join('') : '<tr><td colspan="2">Sin asistencias</td></tr>';
+                const gRows = myG.length ? myG.map(g => `<tr><td>${g.desc}</td><td>${g.val}</td><td>${g.date.split('-').reverse().join('/')}</td></tr>`).join('') : '<tr><td colspan="3">Sin calificaciones</td></tr>';
+
+                document.getElementById('print-container').innerHTML = `
+                    <h1 style="text-align: center; border-bottom: 2px solid black; padding-bottom: 5px; margin-bottom: 15px; font-size: 1.6rem;">Fines Artística - Prof. Horacio Campero</h1>
+                    <h2 style="margin-bottom: 0.5rem; font-size: 1.5rem;">Ficha Individual del Alumno</h2>
+
+                    <p style="margin-bottom: 0.2rem;"><strong>Nombre:</strong> ${st.name}</p>
+                    <p style="margin-bottom: 0.2rem;"><strong>DNI:</strong> ${st.dni || '-'}</p>
+                    <p style="margin-bottom: 0.2rem;"><strong>Teléfono:</strong> ${st.phone || '-'}</p>
+                    <p style="margin-bottom: 0.2rem;"><strong>Curso:</strong> ${st.course}</p>
+                    <p style="margin-bottom: ${myG.length ? '0.2rem' : '1.5rem'};"><strong>Total Asistencias:</strong> ${myAtt.length}</p>
+                    ${avgHtml}
+                    
+                    <h3 style="margin-bottom: 0.5rem; margin-top: 1rem; font-size: 1.2rem;">Calificaciones</h3>
+                    <table style="margin-bottom: 1.5rem;">
+                        <thead><tr><th>Evaluación</th><th>Nota</th><th>Fecha</th></tr></thead>
+                        <tbody>${gRows}</tbody>
+                    </table>
+
+                    <h3 style="margin-bottom: 0.5rem; margin-top: 1rem; font-size: 1.2rem;">Asistencias</h3>
+                    <table>
+                        <thead><tr><th>Fecha</th><th>Curso</th></tr></thead>
+                        <tbody>${attRows}</tbody>
+                    </table>
+                `;
+                window.print();
+            };
+
+            window.printCourseGrades = function() {
+                const sel = document.getElementById('filter-exams-course');
+                const selStatus = document.getElementById('filter-exams-status');
+                const cFilter = sel ? sel.value : 'ALL';
+                const sFilter = selStatus ? selStatus.value : 'ALL';
+                
+                let fStudents = cFilter !== 'ALL' ? students.filter(s => s.course === cFilter) : students;
+                
+                if (sFilter !== 'ALL') {
+                    fStudents = fStudents.filter(st => {
+                        const stG = grades.filter(g => g.studentId == st.id);
+                        const avg = stG.length ? (stG.reduce((sum, g) => sum + (parseFloat(g.val)||0), 0) / stG.length) : null;
+                        
+                        if (sFilter === 'APROBADOS') return avg !== null && avg >= 7;
+                        if (sFilter === 'RECUPERATORIO') return avg !== null && avg >= 4 && avg < 7;
+                        if (sFilter === 'REPROBADOS') return avg !== null && avg < 4;
+                        if (sFilter === 'SIN_NOTA') return stG.length === 0;
+                        return true;
+                    });
+                }
+                
+                if(fStudents.length === 0) return window.showAlert("No hay alumnos para imprimir con estos filtros.");
+
+                const sorted = [...fStudents].sort((a,b) => a.course !== b.course ? a.course.localeCompare(b.course) : a.name.localeCompare(b.name));
+                
+                let tbody = sorted.map(st => {
+                    const stG = grades.filter(g => g.studentId == st.id).sort((a,b) => new Date(a.date) - new Date(b.date));
+                    const cant = stG.length;
+                    const list = stG.length ? stG.map(g => `${g.desc} (${g.val})`).join(' | ') : '-';
+                    const avg = stG.length ? (stG.reduce((sum, g) => sum + (parseFloat(g.val)||0), 0) / stG.length).toFixed(2) : '-';
+                    
+                    return `<tr>
+                        <td><strong>${st.name}</strong></td>
+                        <td>${st.course}</td>
+                        <td style="text-align: center;">${cant}</td>
+                        <td style="color: #444;">${list}</td>
+                        <td style="text-align: center; font-weight: bold;">${avg}</td>
+                    </tr>`;
+                }).join('');
+
+                const statusLabels = {
+                    'ALL': 'Totales',
+                    'APROBADOS': 'Aprobados',
+                    'RECUPERATORIO': 'Recuperatorio',
+                    'REPROBADOS': 'Reprobados',
+                    'SIN_NOTA': 'Sin Nota'
+                };
+
+                document.getElementById('print-container').innerHTML = `
+                    <h1 style="text-align: center; border-bottom: 2px solid black; padding-bottom: 5px; margin-bottom: 15px; font-size: 1.6rem;">Fines Artística - Prof. Horacio Campero</h1>
+                    <h2 style="margin-bottom: 0.5rem; font-size: 1.5rem;">Planilla de Calificaciones - ${statusLabels[sFilter]}</h2>
+
+                    <p style="margin-bottom: 1.5rem;"><strong>Curso(s):</strong> ${cFilter === 'ALL' ? 'Todos' : cFilter}</p>
+                    <table>
+                        <thead><tr><th>Alumno</th><th>Curso</th><th>Cant. Exámenes</th><th>Tema y Nota</th><th>Promedio</th></tr></thead>
+                        <tbody>${tbody}</tbody>
+                    </table>
+                `;
+                window.print();
+            };
+
+            // -- DATA EXPORT/IMPORT --
+            window.exportData = function() {
+                const data = {
+                    students: JSON.parse(localStorage.getItem('sys_students') || '[]'),
+                    attendances: JSON.parse(localStorage.getItem('sys_attendances') || '[]'),
+                    grades: JSON.parse(localStorage.getItem('sys_grades') || '[]'),
+                    courseLinks: JSON.parse(localStorage.getItem('sys_course_links') || '{}'),
+                    exportDate: new Date().toISOString()
+                };
+                
+                // Fetch the current state of the DOM
+                let html = document.documentElement.outerHTML;
+                const encodedData = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+                const dataScript = `<script id="sys-embedded-data">window.__APP_EMBEDDED_DATA__ = "${encodedData}";<\/script>`;
+                
+                const regex = /<script id="sys-embedded-data">.*?<\/script>/;
+                if (regex.test(html)) {
+                    html = html.replace(regex, dataScript);
+                } else {
+                    html = html.replace('</head>', `    ${dataScript}\n</head>`);
+                }
+                
+                const now = new Date();
+                const timestamp = `${now.getDate().toString().padStart(2, '0')}-${(now.getMonth()+1).toString().padStart(2, '0')}-${now.getFullYear()} ${now.getHours().toString().padStart(2, '0')}-${now.getMinutes().toString().padStart(2, '0')}`;
+                
+                const finalHTML = "<!DOCTYPE html>\n<html lang=\"es\">\n" + html;
+                const blob = new Blob([finalHTML], { type: 'text/html;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `Fines Horacio Campero ${timestamp}.html`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            };
+
+            // -- COURSE LINKS MODAL LOGIC --
+            window.openCourseLinksModal = function() {
+                const courses = [...new Set(students.map(s => s.course))].sort();
+                const tbody = document.getElementById('course-links-table-body');
+                tbody.innerHTML = '';
+                
+                if (courses.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="3" class="empty-state">No hay cursos registrados.</td></tr>`;
+                } else {
+                    courses.forEach(c => {
+                        const links = courseLinks[c] || { classroom: '', musicca: '' };
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td><strong>${c}</strong></td>
+                            <td><input type="text" class="course-classroom" data-course="${c}" value="${links.classroom}" placeholder="https://classroom.google.com/..." style="font-size: 0.8rem; padding: 0.4rem;"></td>
+                            <td><input type="text" class="course-musicca" data-course="${c}" value="${links.musicca}" placeholder="https://www.musicca.com/..." style="font-size: 0.8rem; padding: 0.4rem;"></td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+                
+                document.getElementById('course-links-modal').classList.add('active');
+            };
+
+            window.closeCourseLinksModal = function() {
+                document.getElementById('course-links-modal').classList.remove('active');
+            };
+
+            window.saveCourseLinks = function() {
+                const classroomInps = document.querySelectorAll('.course-classroom');
+                const musiccaInps = document.querySelectorAll('.course-musicca');
+                
+                classroomInps.forEach((inp, idx) => {
+                    const course = inp.dataset.course;
+                    const classroom = inp.value.trim();
+                    const musicca = musiccaInps[idx].value.trim();
+                    
+                    if (!courseLinks[course]) courseLinks[course] = {};
+                    courseLinks[course].classroom = classroom;
+                    courseLinks[course].musicca = musicca;
+                });
+                
+                saveCourseLinksData();
+                closeCourseLinksModal();
+                updateStudentViews();
+                if(typeof renderAttendanceList === 'function') renderAttendanceList();
+            };
+
+
+            window.exportJSON = function() {
+                const data = {
+                    students: JSON.parse(localStorage.getItem('sys_students') || '[]'),
+                    attendances: JSON.parse(localStorage.getItem('sys_attendances') || '[]'),
+                    grades: JSON.parse(localStorage.getItem('sys_grades') || '[]'),
+                    exportDate: new Date().toISOString()
+                };
+                
+                const now = new Date();
+                const timestamp = `${now.getDate().toString().padStart(2, '0')}-${(now.getMonth()+1).toString().padStart(2, '0')}-${now.getFullYear()} ${now.getHours().toString().padStart(2, '0')}-${now.getMinutes().toString().padStart(2, '0')}`;
+                
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `BackUp (${timestamp}).json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            };
+
+
+            const importFileInp = document.getElementById('import-file');
+            if (importFileInp) {
+                importFileInp.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (!file) return;
+
+                    const reader = new FileReader();
+                    reader.onload = async function(event) {
+                        try {
+                            const data = JSON.parse(event.target.result);
+                            if (data.students && data.attendances) {
+                                if (await window.showConfirm('Se reemplazará la base de datos actual con la del archivo importado. ¿Desea continuar?')) {
+                                    localStorage.setItem('sys_students', JSON.stringify(data.students));
+                                    localStorage.setItem('sys_attendances', JSON.stringify(data.attendances));
+                                    localStorage.setItem('sys_grades', JSON.stringify(data.grades || []));
+                                    
+                                    students = data.students;
+                                    attendances = data.attendances;
+                                    grades = data.grades || [];
+                                    
+                                    updateStudentViews();
+                                    updateCourseSelects();
+                                    
+                                    // Make sure we update the report if we are on that tab
+                                    if(typeof updateReport === 'function') updateReport();
+                                    
+                                    await window.showAlert('Base de datos restaurada con éxito.');
+                                    autoSaveToHTML();
+                                }
+                            } else {
+                                await window.showAlert('El archivo no tiene el formato correcto. Faltan datos de alumnos o asistencias.');
+                            }
+                        } catch (err) {
+                            await window.showAlert('Error al leer el archivo. Asegúrese de que sea un archivo JSON válido.');
+                        }
+                        e.target.value = '';
+                    };
+                    reader.readAsText(file);
+                });
+            }
+
+            window.linkHTMLFile = async function() {
+                try {
+                    [window.fileHandle] = await window.showOpenFilePicker({
+                        types: [{ description: 'Archivo HTML', accept: {'text/html': ['.html', '.htm']} }],
+                        multiple: false
+                    });
+                    
+                    if (await window.fileHandle.queryPermission({ mode: 'readwrite' }) !== 'granted') {
+                        if (await window.fileHandle.requestPermission({ mode: 'readwrite' }) !== 'granted') {
+                            throw new Error("Permiso denegado");
+                        }
+                    }
+                    
+                    await window.showAlert("✅ Archivo vinculado con éxito. Ahora todos los cambios se guardarán directamente en tu archivo HTML, incluso si se cierra inesperadamente.");
+                    const btnLink = document.getElementById('btn-link-fs');
+                    if (btnLink) btnLink.style.display = 'none';
+                    
+                    autoSaveToHTML();
+                    
+                } catch (err) {
+                    console.error("Error linking file:", err);
+                }
+            };
+
+            if ('showOpenFilePicker' in window && !window.__PORTABLE_MODE__) {
+                const btnLink = document.getElementById('btn-link-fs');
+                if (btnLink) btnLink.style.display = 'flex';
+            }
+
+            // INITIALIZATION
+            updateStudentViews();
+            updateCourseSelects();
+        });
+    </script>
+</body>
+</html>
