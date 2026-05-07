@@ -443,6 +443,12 @@
         .status-present { color: var(--success); }
         .row-absent { background: rgba(239, 68, 68, 0.05) !important; }
 
+        /* Highlight for students with 5+ absences */
+        .absence-warning {
+            color: #fbbf24 !important;
+            text-shadow: 0 0 6px rgba(251, 191, 36, 0.3);
+        }
+
         /* Print formatting */
         #print-container { display: none; }
         @media print {
@@ -1075,6 +1081,20 @@
                 });
             });
 
+            // -- HELPER: Count absences for a student --
+            function getStudentAbsences(st) {
+                const courseDates = [...new Set(attendances.filter(a => a.course === st.course).map(a => a.date))];
+                const studentAttendances = attendances.filter(a => a.studentId === st.id).map(a => a.date).sort();
+                
+                // Si no tiene asistencias, usamos la fecha de creación (st.id) como inicio
+                const startDate = studentAttendances.length > 0 
+                    ? studentAttendances[0] 
+                    : new Date(st.id).toISOString().split('T')[0];
+                
+                const attendedSet = new Set(studentAttendances);
+                return courseDates.filter(d => d >= startDate && !attendedSet.has(d)).length;
+            }
+
             // -- VIEW UPDATERS --
             function updateStudentViews() {
                 // Update table
@@ -1099,9 +1119,11 @@
                 } else {
                     filteredStudents.forEach(st => {
                         const tr = document.createElement('tr');
+                        const absCount = getStudentAbsences(st);
+                        const nameClass = absCount >= 4 ? 'absence-warning' : '';
 
                         tr.innerHTML = `
-                            <td data-label="Nombre"><strong>${st.name}</strong></td>
+                            <td data-label="Nombre"><strong class="${nameClass}">${st.name}</strong>${absCount >= 4 ? ' <span style="font-size:0.75rem; color:#fbbf24;">('+absCount+' faltas)</span>' : ''}</td>
                             <td data-label="Curso">${st.course}</td>
                             <td data-label="Musicca" style="text-align: center;">
                                 <input type="checkbox" ${st.obs ? 'checked' : ''} onchange="toggleStudentObs(${st.id}, this.checked)" style="width: 18px; height: 18px; cursor: pointer;" ${window.__PORTABLE_MODE__ ? 'disabled' : ''}>
@@ -1779,12 +1801,15 @@
 
             window.showAbsenceSummary = function() {
                 const summary = students.map(st => {
-                    // Fechas en las que hubo clases para este curso
                     const courseDates = [...new Set(attendances.filter(a => a.course === st.course).map(a => a.date))];
-                    // Fechas en las que el alumno estuvo presente
-                    const attendedDates = new Set(attendances.filter(a => a.studentId === st.id).map(a => a.date));
+                    const studentAttendances = attendances.filter(a => a.studentId === st.id).map(a => a.date).sort();
                     
-                    const absences = courseDates.filter(d => !attendedDates.has(d)).length;
+                    const startDate = studentAttendances.length > 0 
+                        ? studentAttendances[0] 
+                        : new Date(st.id).toISOString().split('T')[0];
+                    
+                    const attendedSet = new Set(studentAttendances);
+                    const absences = courseDates.filter(d => d >= startDate && !attendedSet.has(d)).length;
                     
                     return {
                         name: st.name,
@@ -1941,12 +1966,13 @@
                 let html = document.documentElement.outerHTML;
                 const encodedData = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
                 const dataScript = `<script id="sys-embedded-data">window.__APP_EMBEDDED_DATA__ = "${encodedData}";<\/script>`;
+                const portableFlagScript = `<script>window.__PORTABLE_MODE__ = true;<\/script>`;
                 
                 const regex = /<script id="sys-embedded-data">.*?<\/script>/;
                 if (regex.test(html)) {
-                    html = html.replace(regex, dataScript);
+                    html = html.replace(regex, dataScript + portableFlagScript);
                 } else {
-                    html = html.replace('</head>', `    ${dataScript}\n</head>`);
+                    html = html.replace('</head>', `    ${dataScript}\n    ${portableFlagScript}\n</head>`);
                 }
                 
                 const now = new Date();
